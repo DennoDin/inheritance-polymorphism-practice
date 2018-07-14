@@ -3,61 +3,23 @@ class AreaCalculator {
   // Returns the total area of all shapes rounded to the nearest whole number
   calculateArea(svg) {
     let area = 0;
-    // let shapeConstructors = {
-    //   circle: Circle(),
-    //   rect: "Rectangle",
-    //   ellipse: "Ellipse"
-    // }
-    let shapeObj = {
+    let shapeConstructors = {
+      circle: Circle,
+      rect: Rectangle,
+      ellipse: Ellipse,
+    };
+    let shapeArgs = {
       circle: ["r"],
       rect: ["width", "height"],
       ellipse: ["rx", "ry"],
     };
 
     for (let shape of svg.children) {
-      // let newShape = new [shapeConstructors[shape.tagName]](shape.getAttribute(shapeObj[shape.tagName][0]), shape.getAttribute(shapeObj[shape.tagName][1]));
-      // area += newShape.calculateArea();
-
-      if (shape.tagName === "circle") {
-        let newShape = new Circle(shape.getAttribute("r"));
-        area += newShape.calculateArea();
-      }
-      if (shape.tagName === "rect") {
-        let newShape = new Rectangle(
-          shape.getAttribute("width"),
-          shape.getAttribute("height")
-        );
-        area += newShape.calculateArea();
-      }
-      if (shape.tagName === "ellipse") {
-        let newShape = new Ellipse(
-          shape.getAttribute("rx"),
-          shape.getAttribute("ry")
-        );
-        area += newShape.calculateArea();
-      }
-
-      // shape.tagName) {
-      //   case "circle": {
-      //     let radius = shape.getAttribute("r");
-      //     area += Math.PI * radius * radius;
-      //     break;
-      //   }
-      //   case "rect": {
-      //     let width = shape.getAttribute("width");
-      //     let height = shape.getAttribute("height");
-      //     area += width * height;
-      //     break;
-      //   }
-      //   case "ellipse": {
-      //     let r1 = shape.getAttribute("rx");
-      //     let r2 = shape.getAttribute("ry");
-      //     area += Math.PI * r1 * r2;
-      //     break;
-      //   }
-      //   default:
-      //     throw new Error("Type not implemented: " + shape.tagName);
-      // }
+      let newShape = new shapeConstructors[shape.tagName](
+        shape.getAttribute(shapeArgs[shape.tagName][0]),
+        shape.getAttribute(shapeArgs[shape.tagName][1])
+      );
+      area += newShape.calculateArea();
     }
     return Math.round(area);
   }
